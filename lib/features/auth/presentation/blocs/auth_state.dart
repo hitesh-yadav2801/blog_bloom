@@ -16,7 +16,7 @@ final class AuthFailureState extends AuthState {
 }
 
 final class AuthSuccessState extends AuthState {
-  final String uid;
+  final User user;
 
-  const AuthSuccessState(this.uid);
+  const AuthSuccessState(this.user);
 }
