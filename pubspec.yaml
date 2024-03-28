@@ -38,7 +38,10 @@ dependencies:
   fpdart:
   supabase_flutter:
   flutter_bloc:
-  get_it: 
+  get_it:
+  dotted_border:
+  image_picker:
+  uuid:
 
 dev_dependencies:
   flutter_test:
