@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blog_bloom/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:blog_bloom/core/common/widgets/loader.dart';
+import 'package:blog_bloom/core/constants/constants.dart';
 import 'package:blog_bloom/core/theme/app_palette.dart';
 import 'package:blog_bloom/core/utils/pick_image.dart';
 import 'package:blog_bloom/core/utils/show_snackbar.dart';
@@ -9,7 +10,6 @@ import 'package:blog_bloom/features/blog/presentation/blocs/blog_bloc.dart';
 import 'package:blog_bloom/features/blog/presentation/pages/blog_page.dart';
 import 'package:blog_bloom/features/blog/presentation/widgets/blog_editor.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -148,12 +148,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
-                          'Technology',
-                          'Business',
-                          'Programming',
-                          'Entertainment'
-                        ]
+                        children: Constants.topics
                             .map(
                               (e) => Padding(
                                 padding: const EdgeInsets.all(5.0),

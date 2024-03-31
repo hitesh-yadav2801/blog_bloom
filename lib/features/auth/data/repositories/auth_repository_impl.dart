@@ -1,19 +1,29 @@
 import 'package:blog_bloom/core/common/entities/user.dart';
+import 'package:blog_bloom/core/constants/constants.dart';
 import 'package:blog_bloom/core/error/exception.dart';
 import 'package:blog_bloom/core/error/failure.dart';
+import 'package:blog_bloom/core/network/connection_checker.dart';
 import 'package:blog_bloom/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:blog_bloom/features/auth/data/models/user_model.dart';
 import 'package:blog_bloom/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
+  final ConnectionChecker connectionChecker;
 
-  const AuthRepositoryImpl(this.remoteDataSource);
+  const AuthRepositoryImpl(this.remoteDataSource, this.connectionChecker);
 
   @override
   Future<Either<Failure, User>> currentUser() async {
     try {
+      if(!await (connectionChecker.isConnected)){
+        final session = remoteDataSource.currentUserSession;
+        if(session == null){
+          return left(Failure('User is not logged in!'));
+        }
+        return right(UserModel(id: session.user.id, name: '', email: session.user.email ?? ''));
+      }
       final user = await remoteDataSource.getCurrentUserData();
       if(user == null) {
         return left(Failure('User is not logged in!'));
@@ -54,11 +64,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
     try {
+      if(!await (connectionChecker.isConnected)){
+        return left(Failure(Constants.noConnectionErrorMessage));
+      }
       final user = await fn();
       return right(user);
-    } on sb.AuthException catch (e) {
-      return left(Failure(e.message));
-    } on ServerException catch (e) {
+    }  on ServerException catch (e) {
       return left(Failure(e.message));
     }
   }
