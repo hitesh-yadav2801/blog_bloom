@@ -1,6 +1,9 @@
 import 'package:blog_bloom/core/common/widgets/loader.dart';
 import 'package:blog_bloom/core/utils/random_color_generator.dart';
+import 'package:blog_bloom/core/utils/show_alert_dialog.dart';
 import 'package:blog_bloom/core/utils/show_snackbar.dart';
+import 'package:blog_bloom/features/auth/presentation/blocs/auth_bloc.dart';
+import 'package:blog_bloom/features/auth/presentation/pages/login_page.dart';
 import 'package:blog_bloom/features/blog/presentation/blocs/blog_bloc.dart';
 import 'package:blog_bloom/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:blog_bloom/features/blog/presentation/widgets/blog_card.dart';
@@ -42,6 +45,40 @@ class _BlogPageState extends State<BlogPage> {
             icon: const Icon(
               CupertinoIcons.add_circled,
             ),
+          ),
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthFailureState) {
+                        showSnackBar(context, state.message);
+                        Navigator.pop(context);
+                      } else if (state is AuthLogoutSuccessState) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          LoginPage.route(),
+                          (route) => false,
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is AuthLoadingState) {
+                        return const Loader();
+                      }
+                      return CustomAlertDialog(
+                        onConfirm: () {
+                          context.read<AuthBloc>().add(AuthLogoutEvent());
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
+            icon: const Icon(Icons.logout_rounded),
           )
         ],
       ),

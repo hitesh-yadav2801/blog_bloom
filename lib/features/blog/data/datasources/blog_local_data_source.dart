@@ -20,13 +20,11 @@ class BlogLocalDataSourceImpl implements BlogLocalDataSource {
         blogs.add(BlogModel.fromJson(box.get(i.toString())));
       }
     });
-    print("Im here");
     return blogs;
   }
 
   @override
   void uploadLocalBlogs({required List<BlogModel> blogs}) {
-    print("I'm here");
     box.clear();
     box.write(() {
       for(int i = 0; i < blogs.length; i++){

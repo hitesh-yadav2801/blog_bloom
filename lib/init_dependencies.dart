@@ -6,6 +6,7 @@ import 'package:blog_bloom/features/auth/data/repositories/auth_repository_impl.
 import 'package:blog_bloom/features/auth/domain/repository/auth_repository.dart';
 import 'package:blog_bloom/features/auth/domain/usecases/current_user.dart';
 import 'package:blog_bloom/features/auth/domain/usecases/user_login.dart';
+import 'package:blog_bloom/features/auth/domain/usecases/user_signout.dart';
 import 'package:blog_bloom/features/auth/domain/usecases/user_signup.dart';
 import 'package:blog_bloom/features/auth/presentation/blocs/auth_bloc.dart';
 import 'package:blog_bloom/features/blog/data/datasources/blog_local_data_source.dart';

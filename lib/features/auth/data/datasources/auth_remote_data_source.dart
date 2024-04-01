@@ -1,8 +1,6 @@
 import 'package:blog_bloom/core/error/exception.dart';
 import 'package:blog_bloom/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
   Session? get currentUserSession;
@@ -17,6 +15,8 @@ abstract interface class AuthRemoteDataSource {
     required String email,
     required String password,
   });
+
+  Future<void> signOut();
 
   Future<UserModel?> getCurrentUserData();
 }
@@ -70,7 +70,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return UserModel.fromJson(response.user!.toJson());
     } on AuthException catch (e) {
       throw ServerException(e.message);
-    }  catch (e) {
+    } catch (e) {
       throw ServerException(e.toString());
     }
   }
@@ -90,6 +90,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return null;
     } catch (e) {
       throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      return await supabaseClient.auth.signOut();
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
+    } on ServerException catch (e) {
+      throw ServerException(e.message);
     }
   }
 }

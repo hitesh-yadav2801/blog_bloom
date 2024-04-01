@@ -17,15 +17,16 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, User>> currentUser() async {
     try {
-      if(!await (connectionChecker.isConnected)){
+      if (!await (connectionChecker.isConnected)) {
         final session = remoteDataSource.currentUserSession;
-        if(session == null){
+        if (session == null) {
           return left(Failure('User is not logged in!'));
         }
-        return right(UserModel(id: session.user.id, name: '', email: session.user.email ?? ''));
+        return right(UserModel(
+            id: session.user.id, name: '', email: session.user.email ?? ''));
       }
       final user = await remoteDataSource.getCurrentUserData();
-      if(user == null) {
+      if (user == null) {
         return left(Failure('User is not logged in!'));
       }
       return right(user);
@@ -64,14 +65,23 @@ class AuthRepositoryImpl implements AuthRepository {
 
   Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
     try {
-      if(!await (connectionChecker.isConnected)){
+      if (!await (connectionChecker.isConnected)) {
         return left(Failure(Constants.noConnectionErrorMessage));
       }
       final user = await fn();
       return right(user);
-    }  on ServerException catch (e) {
+    } on ServerException catch (e) {
       return left(Failure(e.message));
     }
   }
 
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      await remoteDataSource.signOut();
+      return right(null);
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }
