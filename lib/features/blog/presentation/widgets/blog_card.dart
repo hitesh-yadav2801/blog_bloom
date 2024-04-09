@@ -6,22 +6,19 @@ import 'package:flutter/material.dart';
 class BlogCard extends StatelessWidget {
   final Blog blog;
   final Color color;
+  final VoidCallback onTap;
 
   const BlogCard({
     super.key,
     required this.blog,
     required this.color,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          BlogViewerPage.route(blog),
-        );
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(16).copyWith(bottom: 4),
         padding: const EdgeInsets.all(16),

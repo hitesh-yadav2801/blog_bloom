@@ -21,4 +21,20 @@ final class BlogDisplaySuccessState extends BlogState {
   BlogDisplaySuccessState(this.blogs);
 }
 
+final class BlogMyDisplaySuccessState extends BlogState {
+  final List<Blog> blogs;
 
+  BlogMyDisplaySuccessState(this.blogs);
+}
+
+final class BlogDeleteSuccessState extends BlogState {
+  final Blog blog;
+
+  BlogDeleteSuccessState(this.blog);
+}
+
+final class BlogUpdateSuccessState extends BlogState {
+  final Blog blog;
+
+  BlogUpdateSuccessState(this.blog);
+}

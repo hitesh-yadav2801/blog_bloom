@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataSource {
   Session? get currentUserSession;
+  //String? get currentUserId;
 
   Future<UserModel> signUpWithEmailPassword({
     required String name,
@@ -103,4 +104,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw ServerException(e.message);
     }
   }
+
+  // @override
+  // String? get currentUserId => supabaseClient.auth.currentUser?.id;
 }

@@ -109,13 +109,36 @@ void _initBlog() {
     )
     // Use case
     ..registerFactory(
-      () => GetAllBlogs(serviceLocator()),
+      () => GetAllBlogs(
+        serviceLocator(),
+      ),
+    )
+    // Use case
+    ..registerFactory(
+      () => GetMyBlogs(
+        serviceLocator(),
+      ),
+    )
+    // Use case
+    ..registerFactory(
+      () => DeleteBlog(
+        serviceLocator(),
+      ),
+    )
+    // Use case
+    ..registerFactory(
+      () => UpdateBlog(
+        serviceLocator(),
+      ),
     )
     // Bloc
     ..registerLazySingleton(
       () => BlogBloc(
         uploadBlog: serviceLocator(),
         getAllBlogs: serviceLocator(),
+        getMyBlogs: serviceLocator(),
+        deleteBlog: serviceLocator(),
+        updateBlog: serviceLocator(),
       ),
     );
 }
