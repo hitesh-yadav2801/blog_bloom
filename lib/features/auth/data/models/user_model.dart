@@ -1,5 +1,3 @@
-
-
 import 'package:blog_bloom/core/common/entities/user.dart';
 
 class UserModel extends User {

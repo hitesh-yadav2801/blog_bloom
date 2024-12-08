@@ -22,7 +22,7 @@ class BlogLocalDataSourceImpl implements BlogLocalDataSource {
     });
     return blogs;
   }
-
+ 
   @override
   void uploadLocalBlogs({required List<BlogModel> blogs}) {
     box.clear();

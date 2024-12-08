@@ -19,6 +19,7 @@ Future<void> initDependencies() async {
 
   // core
   serviceLocator.registerLazySingleton(() => AppUserCubit());
+  
   serviceLocator.registerFactory<ConnectionChecker>(
     () => ConnectionCheckerImpl(
       serviceLocator(),

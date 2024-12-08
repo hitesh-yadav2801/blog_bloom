@@ -43,7 +43,6 @@ class _MyAppState extends State<MyApp> {
     context.read<AuthBloc>().add(AuthIsUserLoggedInEvent());
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,6 +54,7 @@ class _MyAppState extends State<MyApp> {
           return state is AppUserLoggedInState;
         },
         builder: (context, isLoggedIn) {
+          print(isLoggedIn);
           if (isLoggedIn) {
             return const BlogPage();
           }

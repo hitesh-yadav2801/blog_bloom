@@ -30,7 +30,6 @@ class _BlogPageState extends State<BlogPage> {
   @override
   void initState() {
     super.initState();
-    print('here');
     context.read<BlogBloc>().add(BlogFetchAllBlogsEvent());
   }
 
